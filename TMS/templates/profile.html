@@ -1,0 +1,24 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/profile.css' %}">
+    <title>Бокове меню</title>
+</head>
+<body>
+
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+    <a href="{% url 'common_tasks' %}">Спільні завдання</a>
+</div>
+
+<div id="content">
+    <h2>Welcome , {{ user.username }}!</h2>
+</div>
+
+</body>
+</html>

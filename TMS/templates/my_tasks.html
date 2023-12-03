@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/my_tasks.css' %}">
+    <title>Бокове меню</title>
+</head>
+<body>
+
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+</div>
+
+<div id="content">
+    <h1>My Tasks</h1>
+
+    {% if tasks %}
+        <ul>
+            {% for task in tasks %}
+                <table>
+                    <td><a href="{% url 'task_info' task.id %}">{{ task.title }}</a></td>
+                </table>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks available.</p>
+    {% endif %}
+    <a><button onclick="window.location.href='{% url 'create_task' %}';" type="button">Add Task</button></a>
+</div>
+
+</body>
+</html>

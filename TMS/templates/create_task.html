@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/create_task.css' %}">
+    <title>Бокове меню</title>
+</head>
+<body>
+
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+</div>
+
+<div id="content">
+    <h2>Create Task</h2>
+    <form method="post" action="{% url 'create_task' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Task</button>
+        <a><button onclick="window.location.href='{% url 'profile' %}';" type="button">Back to profile</button></a>
+    </form>
+</div>
+
+</body>
+</html>

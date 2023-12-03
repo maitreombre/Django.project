@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/task_info.css' %}">
+    <title>Task information</title>
+</head>
+<body>
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+</div>
+
+<div id="content">
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+    <p>Created at: {{ task.created_at }}</p>
+    {% if task.due_date %}
+    <p>Due date: {{ task.due_date }}</p>
+    {% endif %}
+    <p>Completed: {% if task.completed %} Yes {% else %} No {% endif %}</p>
+    {% if task.priority %}
+    <p>Priority: {{ task.priority }}</p>
+    {% endif %}
+    <form method="post" action="{% url 'task_comments' task.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="task_id" value="{{ task.id }}">
+        <button type="submit">Comments</button>
+    </form>
+</div>
+</body>
+</html>

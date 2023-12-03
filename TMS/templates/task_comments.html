@@ -1,0 +1,40 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/task_comments.css' %}">
+    <title>Task comments</title>
+</head>
+<body>
+
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+</div>
+
+<div id="content">
+    <h3>Comments to task {{ task.title }} </h3>
+    {% if comments %}
+        <table>
+            {% for comment in comments %}
+            <td>{{ comment.comment }}<a href="{% url 'delete_comment' comment.id %}">Delete</a></td>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No comments for this task</p>
+    {% endif %}
+
+    <h2>Add New Comment</h2>
+    <form method="post" action="{% url 'add_comment' %}">
+        {% csrf_token %}
+        <input type="hidden" name="task_id" value="{{ task.id }}">
+        <label for="comment">Comment:</label>
+        <input type="text" name="comment" id="comment" required>
+        <button type="submit">Add comment</button>
+    </form>
+    <a><button onclick="window.location.href='{% url 'my_tasks' %}';" type="button">Back to tasks</button></a>
+</div>
+
+</body>
+</html>

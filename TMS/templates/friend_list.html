@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/friend_list.css' %}">
+    <title>Бокове меню</title>
+</head>
+
+<body>
+
+    <div id="sidebar">
+        <a href="{% url 'my_tasks' %}">Мої завдання</a>
+        <a href="{% url 'friend_list' %}">Мої друзі</a>
+    </div>
+
+    <div id="content">
+        <h2>Your Friends</h2>
+        {% if friends %}
+        <ul>
+            {% for friend in friends %}
+            <li>{{ friend.friend.username }} - Friend</li>
+            <form method="post" action="{% url 'remove_friend' %}">
+                {% csrf_token %}
+                <input type="hidden" name="friend_username" value="{{ friend.friend.username }}">
+                <button type="submit">Delete friend</button>
+            </form>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>You have no friends.</p>
+        {% endif %}
+
+        <h2>Friend Requests</h2>
+        {% if friend_requests %}
+        <ul>
+            {% for request in friend_requests %}
+            <li>{{ request.user.username }} - Friend request
+                <form method="post" action="{% url 'accept_friend_request' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{ request.user.username }}">
+                    <button type="submit">Accept</button>
+                </form>
+                <form method="post" action="{% url 'decline_friend_request' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="username" value="{{ request.user.username }}">
+                    <button type="submit">Decline</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>You have no friend requests.</p>
+        {% endif %}
+
+        <h2>Add New Friend</h2>
+        <form method="post" action="{% url 'add_friend' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required>
+            <button type="submit">Add friend</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

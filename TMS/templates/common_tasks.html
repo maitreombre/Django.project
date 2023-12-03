@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'TMS/css/my_tasks.css' %}">
+    <title>Бокове меню</title>
+</head>
+<body>
+
+<div id="sidebar">
+    <a href="{% url 'my_tasks' %}">Мої завдання</a>
+    <a href="{% url 'friend_list' %}">Мої друзі</a>
+</div>
+
+<div id="content">
+    <h1>Common Tasks</h1>
+
+    {% if common_tasks %}
+        <ul>
+            {% for common_task in common_tasks %}
+                <table>
+                    <td>{{ task.title }}</td>
+                </table>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tasks available.</p>
+    {% endif %}
+    <a><button onclick="window.location.href='{% url 'create_common_task' %}';" type="button">Add Common Task</button></a>
+</div>
